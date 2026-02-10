@@ -15,7 +15,8 @@ public class CalculatorTest {
 
     @Test
     public void calorieCalculationManTest() {
-        int result = calculator.calorieCalculation(80, 180, 30, Activity.MODERATE, Gender.MAN);
+        int result = calculator.calculateCalories(80, 180, 30, Activity.MODERATE, Gender.MAN);
         assertEquals(2759, result, "Расчёт калорий для мужчины с умеренной активностью должен быть ~2759");
+
     }
 }

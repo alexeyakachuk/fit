@@ -2,6 +2,7 @@ package com.fit.fit.controller;
 
 import com.fit.fit.enums.Activity;
 import com.fit.fit.enums.Gender;
+import com.fit.fit.model.CalculatorRequest;
 import com.fit.fit.service.Calculator;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +12,16 @@ public class CalculatorController {
 
     private final Calculator calculator = new Calculator();
 
-    @GetMapping("/calories")
-    public String calculateCalories(
-            @RequestParam int weight,
-            @RequestParam int height,
-            @RequestParam int age,
-            @RequestParam Activity activity,
-            @RequestParam Gender gender) {
+    @PostMapping("/calories")
+    public String calculateCalories(@RequestBody CalculatorRequest request) {
 
-        int result = calculator.calorieCalculation(weight, height, age, activity, gender);
+        int result = calculator.calculateCalories(
+                request.getWeight(),
+                request.getHeight(),
+                request.getAge(),
+                request.getActivity(),
+                request.getGender()
+        );
 
         // Форматируем красивый текст
         return String.format(
@@ -30,11 +32,11 @@ public class CalculatorController {
                         " Активность: %s\n" +
                         " Пол: %s\n" +
                         " Результат: %d калорий/день",
-                weight,
-                height,
-                age,
-                activity.getLabel(),  // предполагаем, что у Activity есть метод getLabel()
-                gender.getLabel(),    // аналогично для Gender
+                request.getWeight(),
+                request.getHeight(),
+                request.getAge(),
+                request.getActivity().getLabel(),
+                request.getGender().getLabel(),
                 result
         );
     }

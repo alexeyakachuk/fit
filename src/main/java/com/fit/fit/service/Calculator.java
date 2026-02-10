@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class Calculator {
 
     // метод для расчета калорий
-    public int calorieCalculation(int weight, int height, int age, Activity activity, Gender gender) {
+    public int calculateCalories(int weight, int height, int age, Activity activity, Gender gender) {
         //проверка, что возраст вес и рост указаны верно
         if (weight <= 0 || height <= 0 || age <= 0) {
             throw new ValidationException("Вес, рост и возраст должны быть больше 0");
