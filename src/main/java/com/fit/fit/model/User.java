@@ -1,26 +1,49 @@
 package com.fit.fit.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import java.time.LocalDateTime;
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Entity
 public class User {
-    private final Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @NonNull
-    private final String userName;
+    @Column(name = "userName", nullable = false, unique = true)
+    private String userName;
     @NonNull
     @Email
-    private final String email;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
     @NonNull
     @NotBlank(message = "Не может быть пустым")
-    private final String password;
+    @Column(name = "password", nullable = false)
+    private String password;
     // поле для записи времени регистрации
-    private final LocalDateTime created_ad;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
     // поле для записи времени изменения пользвователя
-    private final LocalDateTime update_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+// проверить будет ли создоватся время и обновлятся
+//    @PrePersist
+//    protected void onCreate() {
+//        LocalDateTime now = LocalDateTime.now();
+//        this.createdAt = now; // дата/время создания
+//        this.updatedAt = now;   // при создании обновление считается тем же, что и создание
+//    }
+//
+//    @PreUpdate
+//    protected void onUpdate() {
+//        this.updatedAt = LocalDateTime.now(); // только дата/время обновления
+//    }
 }
+
