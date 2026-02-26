@@ -29,4 +29,11 @@ public class ErrorHandler {
         log.error("Произошла ошибка не указаны пол или активность");
         return Map.of("Произошла ошибка", e.getMessage());
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handNotFoundException(final NotFoundException e) {
+        log.error("Произошла ошибка таких данных нет");
+        return Map.of("Произошла ошибка", e.getMessage());
+    }
 }
