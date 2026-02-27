@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NonNull
-    @Column(name = "userName", nullable = false, unique = true)
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
     @NonNull
     @Email
@@ -34,16 +35,16 @@ public class User {
     private LocalDateTime updatedAt;
 
 // проверить будет ли создоватся время и обновлятся
-//    @PrePersist
-//    protected void onCreate() {
-//        LocalDateTime now = LocalDateTime.now();
-//        this.createdAt = now; // дата/время создания
-//        this.updatedAt = now;   // при создании обновление считается тем же, что и создание
-//    }
-//
-//    @PreUpdate
-//    protected void onUpdate() {
-//        this.updatedAt = LocalDateTime.now(); // только дата/время обновления
-//    }
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now; // дата/время создания
+        this.updatedAt = now;   // при создании обновление считается тем же, что и создание
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now(); // только дата/время обновления
+    }
 }
 

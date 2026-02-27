@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,5 +15,4 @@ public class CreateUserRequest {
     private String userName;
     private String email;
     private String password;
-
 }
