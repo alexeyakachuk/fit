@@ -42,4 +42,12 @@ public class UserService {
                 .map(user -> new UserDto(user))
                 .toList();
     }
+
+    // Удоление пользователя
+    public void deleteUser(Integer id) {
+        if (findUser(id) == null) {
+            throw new NotFoundException("Пользователя с id " + id + "не найден");
+        }
+        repository.deleteById(id);
+    }
 }

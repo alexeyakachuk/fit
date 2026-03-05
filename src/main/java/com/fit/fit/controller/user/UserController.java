@@ -30,4 +30,9 @@ public class UserController {
     public List<UserDto> findAll() {
         return service.findAll();
     }
+// удоление пользователя по id
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        service.deleteUser(id);
+    }
 }
