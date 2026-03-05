@@ -8,6 +8,8 @@ import com.fit.fit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserService {
@@ -32,5 +34,12 @@ public class UserService {
         // выяснить почему работает только через лямду
         User user = repository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
         return new UserDto(user);
+    }
+
+    // Получение всех пользователей
+    public List<UserDto> findAll() {
+        return repository.findAll().stream()
+                .map(user -> new UserDto(user))
+                .toList();
     }
 }

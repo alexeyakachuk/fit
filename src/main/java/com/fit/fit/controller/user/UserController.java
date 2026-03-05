@@ -7,20 +7,27 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/user")
 public class UserController {
 
     @Autowired
     private UserService service;
-
+// создание пользователя
     @PostMapping
     public UserDto create(@Valid @RequestBody CreateUserRequest newUser) {
         return service.create(newUser);
     }
-
+// получение пользователя по id
     @GetMapping("/{id}")
     public UserDto findUser(@PathVariable Integer id, HttpServletRequest request) {
         return service.findUser(id);
+    }
+    // получение всех пользователей
+    @GetMapping
+    public List<UserDto> findAll() {
+        return service.findAll();
     }
 }
