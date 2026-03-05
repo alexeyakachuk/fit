@@ -9,13 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository repository;
-// создание пользователя
+
+    // создание пользователя
     public UserDto create(CreateUserRequest newUser) {
         // если будет нужно сделать проверки на исключения имени и почты
         User user = User.builder()
@@ -49,5 +51,16 @@ public class UserService {
             throw new NotFoundException("Пользователя с id " + id + "не найден");
         }
         repository.deleteById(id);
+    }
+
+    // обновление пользователя
+    public UserDto updateUser(Integer id, CreateUserRequest newUser) {
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
+        user.setUserName(newUser.getUserName());
+        user.setEmail(newUser.getEmail());
+        user.setPassword(newUser.getPassword());
+
+        repository.save(user);
+        return new UserDto(user);
     }
 }
