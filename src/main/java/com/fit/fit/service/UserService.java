@@ -48,7 +48,7 @@ public class UserService {
     // Удоление пользователя
     public void deleteUser(Integer id) {
         if (!repository.existsById(id)) {
-            throw new NotFoundException("Пользователя с id " + id + "не найден");
+            throw new NotFoundException("Пользователя с id " + id + " не найден");
         }
         repository.deleteById(id);
     }

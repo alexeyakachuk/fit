@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -17,74 +16,70 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
-@ActiveProfiles("test")
 public class UserServiceTest {
     @Autowired
     public UserService userService;
     @Autowired
     private UserRepository repository;
 
+    private int userIdFirst;
+    private int userIdSecond;
+
     @BeforeEach
     void cleanup() {
-        repository.deleteAll(); // или ваш репозиторий
+        repository.deleteAll();
+        CreateUserRequest request = CreateUserRequest.builder()
+                .userName("Алексей")
+                .email("box03-853@yandex.ru")
+                .password("1111")
+                .build();
+        UserDto userDto = userService.create(request);
+        userIdFirst = userDto.getId();
+
+        request = CreateUserRequest.builder()
+                .userName("Маша")
+                .email("маша@yandex.ru")
+                .password("2222")
+                .build();
+        userDto = userService.create(request);
+        userIdSecond = userDto.getId();
+
     }
 
     // тест на создание пользователя
     @Test
     public void createTest() {
         CreateUserRequest request = CreateUserRequest.builder()
-                .userName("Алексей")
-                .email("box03-853@yandex.ru")
-                .password("1111")
+                .userName("Алексей1")
+                .email("box03-852@yandex.ru")
+                .password("2222")
                 .build();
 
         UserDto createdUserDto = userService.create(request);
 
         assertThat(createdUserDto).isNotNull();
         assertThat(createdUserDto.getId()).isNotNull();
-        assertThat(createdUserDto.getUserName()).isEqualTo("Алексей");
-        assertThat(createdUserDto.getEmail()).isEqualTo("box03-853@yandex.ru");
+        assertThat(createdUserDto.getUserName()).isEqualTo("Алексей1");
+        assertThat(createdUserDto.getEmail()).isEqualTo("box03-852@yandex.ru");
 
     }
 
     //Тест на возвращение пользователя по id
     @Test
     public void findUserTest() {
-        CreateUserRequest request = CreateUserRequest.builder()
-                .userName("Маша")
-                .email("маша@yandex.ru")
-                .password("2222")
-                .build();
 
-        UserDto createdUserDto = userService.create(request);
-        userService.findAll();
-        userService.findUser(1);
+        UserDto user = userService.findUser(userIdSecond);
 
-        assertThat(createdUserDto).isNotNull();
-        assertThat(createdUserDto.getId()).isNotNull();
-        assertThat(createdUserDto.getUserName()).isEqualTo("Маша");
-        assertThat(createdUserDto.getEmail()).isEqualTo("маша@yandex.ru");
+        assertThat(user).isNotNull();
+        assertThat(user.getId()).isNotNull();
+        assertThat(user.getUserName()).isEqualTo("Маша");
+        assertThat(user.getEmail()).isEqualTo("маша@yandex.ru");
 
     }
 
     //Тест на возврощение всех пользователей
     @Test
     public void findAllTest() {
-        CreateUserRequest request1 = CreateUserRequest.builder()
-                .userName("Алексей")
-                .email("box03-853@yandex.ru")
-                .password("1111")
-                .build();
-
-        UserDto createdUserDto1 = userService.create(request1);
-
-        CreateUserRequest request2 = CreateUserRequest.builder()
-                .userName("Маша")
-                .email("маша@yandex.ru")
-                .password("2222")
-                .build();
-
-        UserDto createdUserDto2 = userService.create(request2);
 
         List<UserDto> users = userService.findAll();
 
@@ -96,41 +91,24 @@ public class UserServiceTest {
                 .containsExactlyInAnyOrder(
                         tuple("Алексей", "box03-853@yandex.ru"),
                         tuple("Маша", "маша@yandex.ru")
+
                 );
     }
 
     // Тест на удаление пользователя
     @Test
     public void deleteUserTest() {
-        CreateUserRequest request = CreateUserRequest.builder()
-                .userName("Алексей")
-                .email("box03-853@yandex.ru")
-                .password("1111")
-                .build();
+        userService.deleteUser(userIdFirst);
 
-        UserDto createdUser = userService.create(request);
-        Integer userId = createdUser.getId();
-
-        userService.deleteUser(userId);
-
-        assertThatThrownBy(() -> userService.findUser(userId))
+        assertThatThrownBy(() -> userService.findUser(userIdFirst))
                 .isInstanceOf(NotFoundException.class)
-                .hasMessage("Пользователь с id " + userId + " не найден");
+                .hasMessage("Пользователь с id " + userIdFirst + " не найден");
     }
 
 
     // Тест на обновление пользователя
     @Test
     public void updateUserTest() {
-        // Arrange
-        CreateUserRequest originalRequest = CreateUserRequest.builder()
-                .userName("Алексей")
-                .email("box03-853@yandex.ru")
-                .password("1111")
-                .build();
-
-        UserDto createdUser = userService.create(originalRequest);
-        Integer userId = createdUser.getId();
 
         CreateUserRequest updateRequest = CreateUserRequest.builder()
                 .userName("Алексей1")
@@ -138,10 +116,10 @@ public class UserServiceTest {
                 .password("1111")
                 .build();
 
-        UserDto updatedUser = userService.updateUser(userId, updateRequest);
+        UserDto updatedUser = userService.updateUser(userIdFirst, updateRequest);
 
         assertThat(updatedUser).isNotNull();
-        assertThat(updatedUser.getId()).isEqualTo(userId);
+        assertThat(updatedUser.getId()).isEqualTo(userIdFirst);
         assertThat(updatedUser.getUserName()).isEqualTo("Алексей1");
         assertThat(updatedUser.getEmail()).isEqualTo("box03-853@yandex.ru");
 
