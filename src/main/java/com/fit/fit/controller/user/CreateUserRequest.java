@@ -1,9 +1,9 @@
 package com.fit.fit.controller.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
 
 @Data
@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateUserRequest {
-    private Integer id;
+    //    private Integer id;
+    @NonNull
     private String userName;
+    @Email
     private String email;
+    //    @NonNull
     private String password;
 }

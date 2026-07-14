@@ -16,14 +16,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NonNull
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
-    @NonNull
-    @Email
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @NonNull
     @NotBlank(message = "Не может быть пустым")
     @Column(name = "password", nullable = false)
     private String password;
