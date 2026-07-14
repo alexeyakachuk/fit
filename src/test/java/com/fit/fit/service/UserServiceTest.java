@@ -1,7 +1,7 @@
 package com.fit.fit.service;
 
 import com.fit.fit.controller.user.CreateUserRequest;
-import com.fit.fit.dto.user.UserDto;
+import com.fit.fit.dto.UserDto;
 import com.fit.fit.exception.NotFoundException;
 import com.fit.fit.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;

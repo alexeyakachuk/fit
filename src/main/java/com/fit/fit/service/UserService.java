@@ -1,7 +1,7 @@
 package com.fit.fit.service;
 
 import com.fit.fit.controller.user.CreateUserRequest;
-import com.fit.fit.dto.user.UserDto;
+import com.fit.fit.dto.UserDto;
 import com.fit.fit.exception.NotFoundException;
 import com.fit.fit.model.User;
 import com.fit.fit.repository.UserRepository;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

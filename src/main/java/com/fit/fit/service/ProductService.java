@@ -1,11 +1,10 @@
 package com.fit.fit.service;
 
 import com.fit.fit.controller.product.CreateProductRequest;
-import com.fit.fit.dto.product.ProductDto;
+import com.fit.fit.dto.ProductDto;
 import com.fit.fit.exception.NotFoundException;
 import com.fit.fit.model.Product;
 import com.fit.fit.repository.ProductRepository;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

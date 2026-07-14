@@ -1,6 +1,6 @@
 package com.fit.fit.controller.product;
 
-import com.fit.fit.dto.product.ProductDto;
+import com.fit.fit.dto.ProductDto;
 import com.fit.fit.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

@@ -87,4 +87,16 @@ public class CreateProductRequest {
     public int hashCode() {
         return Objects.hash(getProductType(), getProductName(), getCalories(), getProtein(), getFat(), getCarbohydrate());
     }
+
+    @Override
+    public String toString() {
+        return "CreateProductRequest{" +
+                "productType='" + productType + '\'' +
+                ", productName='" + productName + '\'' +
+                ", calories=" + calories +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", carbohydrate=" + carbohydrate +
+                '}';
+    }
 }

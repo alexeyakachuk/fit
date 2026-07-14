@@ -1,4 +1,4 @@
-package com.fit.fit.dto.product;
+package com.fit.fit.dto;
 
 import com.fit.fit.model.Product;
 import lombok.Data;
