@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 
 public class ProductDto {
+    private Integer id;
     private String productType;
     private String productName;
     private Double calories;
@@ -14,6 +15,7 @@ public class ProductDto {
     private Double carbohydrate;
 
     public ProductDto(Product product) {
+        this.id = product.getId();
         this.productType = product.getProductType();
         this.productName = product.getProductName();
         this.calories = product.getCalories();

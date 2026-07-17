@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class UserMealDto {
+    //возможно исправить на UserDto и ProductDto
     private User user;
     private Product product;
     private Integer amountGrams;

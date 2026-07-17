@@ -62,4 +62,10 @@ public class UserService {
         repository.save(user);
         return new UserDto(user);
     }
+
+    // приватный метод для получения user по id
+    protected User findUser1(Integer id) {
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
+        return user;
+    }
 }

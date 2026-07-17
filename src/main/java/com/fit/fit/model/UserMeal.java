@@ -1,6 +1,7 @@
 package com.fit.fit.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,13 +26,16 @@ public class UserMeal {
     @Column(name = "meal_date", nullable = false)
     private LocalDate mealDate;
 
-    public UserMeal(Integer id, User user, Product product, Integer amountGrams, String mealType, LocalDate mealDate) {
-        this.id = id;
+    public UserMeal(User user, Product product, Integer amountGrams, String mealType, LocalDate mealDate) {
         this.user = user;
         this.product = product;
         this.amountGrams = amountGrams;
         this.mealType = mealType;
         this.mealDate = mealDate;
+    }
+
+    public UserMeal() {
+        this.mealDate = LocalDate.now();
     }
 
     public Integer getId() {
@@ -94,10 +98,10 @@ public class UserMeal {
         return Objects.hash(getId(), getUser(), getProduct(), getAmountGrams(), getMealType(), getMealDate());
     }
 
-    @PrePersist
-    protected void onCreate() {
-        this.mealDate = LocalDate.now();
-    }
+//    @PrePersist
+//    protected void onCreate() {
+//        this.mealDate = LocalDate.now();
+//    }
 
         @Override
     public String toString() {

@@ -4,6 +4,7 @@ import com.fit.fit.controller.product.CreateProductRequest;
 import com.fit.fit.dto.ProductDto;
 import com.fit.fit.exception.NotFoundException;
 import com.fit.fit.model.Product;
+import com.fit.fit.model.User;
 import com.fit.fit.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,5 +55,11 @@ public class ProductService {
             throw new NotFoundException("Продукта  с id " + id + " не найден");
         }
         repository.deleteById(id);
+    }
+
+    // приватный метод для ghjlernf user по id
+    protected Product findProduct1(Integer id) {
+        Product product = repository.findById(id).orElseThrow(() -> new NotFoundException("Продукт с id " + id + " не найден"));
+        return product;
     }
 }
