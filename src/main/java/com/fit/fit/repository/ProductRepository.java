@@ -11,10 +11,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByProductType(String productType);
 
     // Используем @Query вместо findByProductType
-//    @Query("SELECT p FROM Product p WHERE p.productType = :productType")
-    default List<Product> findAllProductType(String productType) {
-        return findByProductType(productType);
-    }
+    @Query("SELECT p FROM Product p WHERE p.productType = :productType")
+    List<Product> findAllProductType(String productType);
 }
 
 

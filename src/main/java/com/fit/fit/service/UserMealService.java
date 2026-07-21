@@ -5,7 +5,7 @@ import com.fit.fit.dto.UserMealDto;
 import com.fit.fit.model.Product;
 import com.fit.fit.model.User;
 import com.fit.fit.model.UserMeal;
-import com.fit.fit.repository.userMeal.UserMealRepository;
+import com.fit.fit.repository.UserMealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,10 @@ public class UserMealService {
 
     // получение всех съеденных продуктов за определенную дату
     public List<UserMealDto> findAllFoodsForPeriod(Integer id, LocalDate start, LocalDate end) {
-        return null;
+        return repository.findAllFoodsForPeriod(id, start, end)
+                .stream()
+                .map(userMeal -> new UserMealDto(userMeal))
+                .toList();
     }
 
 }
