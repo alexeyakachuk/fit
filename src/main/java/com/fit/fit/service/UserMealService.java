@@ -26,17 +26,20 @@ public class UserMealService {
         User user = userService.findUser1(newUserMeal.getUserId());
 
         Product product = productService.findProduct1(newUserMeal.getProductId());
-
         UserMeal userMeal = new UserMeal();
         userMeal.setUser(user);
         userMeal.setProduct(product);
         userMeal.setAmountGrams(newUserMeal.getAmountGrams());
         userMeal.setMealType(newUserMeal.getMealType());
+        if (newUserMeal.getMealDate() == null) {
+            userMeal.setMealDate(LocalDate.now());
+        } else {
+            userMeal.setMealDate(newUserMeal.getMealDate());
+        }
 
 //        repository.save(userMeal);
         return new UserMealDto(userMeal);
     }
-
     // получение всех съеденных продуктов за определенную дату
     public List<UserMealDto> findAllFoodsForPeriod(Integer id, LocalDate start, LocalDate end) {
         return repository.findAllFoodsForPeriod(id, start, end)
@@ -44,5 +47,4 @@ public class UserMealService {
                 .map(userMeal -> new UserMealDto(userMeal))
                 .toList();
     }
-
 }

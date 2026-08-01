@@ -35,7 +35,7 @@ public class UserMeal {
     }
 
     public UserMeal() {
-        this.mealDate = LocalDate.now();
+//        this.mealDate = LocalDate.now();
     }
 
     public Integer getId() {
@@ -100,10 +100,13 @@ public class UserMeal {
 
 //    @PrePersist
 //    protected void onCreate() {
-//        this.mealDate = LocalDate.now();
+//        if (this.mealDate == null) {
+//            this.mealDate = LocalDate.now();
+//        }
 //    }
 
-        @Override
+
+    @Override
     public String toString() {
         return "UserMeal{" +
                 "id=" + id +

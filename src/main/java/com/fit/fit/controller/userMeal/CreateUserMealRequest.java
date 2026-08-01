@@ -1,7 +1,9 @@
 package com.fit.fit.controller.userMeal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.NonNull;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class CreateUserMealRequest {
@@ -13,12 +15,16 @@ public class CreateUserMealRequest {
     private Integer amountGrams;
     @NonNull
     private String mealType;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate mealDate;
 
-    public CreateUserMealRequest(@NonNull Integer userId, @NonNull Integer amountGrams, @NonNull Integer productId, @NonNull String mealType) {
+    public CreateUserMealRequest(@NonNull Integer userId, @NonNull Integer amountGrams, @NonNull Integer productId,
+                                 @NonNull String mealType, LocalDate mealDate) {
         this.userId = userId;
         this.amountGrams = amountGrams;
         this.productId = productId;
         this.mealType = mealType;
+        this.mealDate = mealDate;
     }
 
     public @NonNull Integer getUserId() {
@@ -53,16 +59,24 @@ public class CreateUserMealRequest {
         this.mealType = mealType;
     }
 
+    public LocalDate getMealDate() {
+        return mealDate;
+    }
+
+    public void setMealDate(LocalDate mealDate) {
+        this.mealDate = mealDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CreateUserMealRequest that = (CreateUserMealRequest) o;
-        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getProductId(), that.getProductId()) && Objects.equals(getAmountGrams(), that.getAmountGrams()) && Objects.equals(getMealType(), that.getMealType());
+        return Objects.equals(getUserId(), that.getUserId()) && Objects.equals(getProductId(), that.getProductId()) && Objects.equals(getAmountGrams(), that.getAmountGrams()) && Objects.equals(getMealType(), that.getMealType()) && Objects.equals(getMealDate(), that.getMealDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getProductId(), getAmountGrams(), getMealType());
+        return Objects.hash(getUserId(), getProductId(), getAmountGrams(), getMealType(), getMealDate());
     }
 
     @Override
@@ -72,6 +86,7 @@ public class CreateUserMealRequest {
                 ", productId=" + productId +
                 ", amountGrams=" + amountGrams +
                 ", mealType='" + mealType + '\'' +
+                ", mealDate=" + mealDate +
                 '}';
     }
 }

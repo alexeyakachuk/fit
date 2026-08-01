@@ -27,6 +27,12 @@ public class UserMealController {
 //           ) {
 //        return service.findAllFoodsForPeriod(id, start, end);
 //    }
+    @PostMapping("/forgotten")
+    public UserMealDto create(@Valid @RequestBody CreateUserMealRequest newUser) {
+        return service.create(newUser);
+
+    }
+
 
     @GetMapping("/by-period")
     public List<UserMealDto> findAllFoodsForPeriod(
