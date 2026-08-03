@@ -37,7 +37,7 @@ public class UserMealService {
             userMeal.setMealDate(newUserMeal.getMealDate());
         }
 
-//        repository.save(userMeal);
+        repository.save(userMeal);
         return new UserMealDto(userMeal);
     }
     // получение всех съеденных продуктов за определенную дату
@@ -46,5 +46,10 @@ public class UserMealService {
                 .stream()
                 .map(userMeal -> new UserMealDto(userMeal))
                 .toList();
+    }
+
+    //Удоление
+    public void delete (Integer id) {
+        repository.deleteById(id);
     }
 }

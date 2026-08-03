@@ -22,13 +22,8 @@ public class UserMealController {
         return service.create(newUser);
     }
 
-//    @GetMapping("/by-period")
-//    public List<UserMealDto> findAllFoodsForPeriod(@Valid @RequestBody Integer id, LocalDate start, LocalDate end
-//           ) {
-//        return service.findAllFoodsForPeriod(id, start, end);
-//    }
     @PostMapping("/forgotten")
-    public UserMealDto create(@Valid @RequestBody CreateUserMealRequest newUser) {
+    public UserMealDto createForgotten(@Valid @RequestBody CreateUserMealRequest newUser) {
         return service.create(newUser);
 
     }
@@ -41,5 +36,10 @@ public class UserMealController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
     ) {
         return service.findAllFoodsForPeriod(id, start, end);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Integer id) {
+        service.delete(id);
     }
 }
