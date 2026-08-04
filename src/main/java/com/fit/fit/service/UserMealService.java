@@ -3,6 +3,7 @@ package com.fit.fit.service;
 import com.fit.fit.controller.userMeal.CreateUserMealRequest;
 import com.fit.fit.dto.UserMealDto;
 import com.fit.fit.exception.NotFoundException;
+import com.fit.fit.exception.ValidationException;
 import com.fit.fit.model.Product;
 import com.fit.fit.model.User;
 import com.fit.fit.model.UserMeal;
@@ -25,8 +26,18 @@ public class UserMealService {
     public UserMealDto create(CreateUserMealRequest newUserMeal) {
 
         User user = userService.findUser1(newUserMeal.getUserId());
+        if (user == null) {
+            throw new NotFoundException("Пользователь с id " + newUserMeal.getUserId() + " не найден");
+        }
 
         Product product = productService.findProduct1(newUserMeal.getProductId());
+        if (product == null) {
+            throw new NotFoundException("Продукт с id " + newUserMeal.getProductId() + " не найден");
+        }
+
+        if (newUserMeal.getAmountGrams() <= 0) {
+            throw new ValidationException("Количество граммов должно быть положительным числом");
+        }
         UserMeal userMeal = new UserMeal();
         userMeal.setUser(user);
         userMeal.setProduct(product);
@@ -58,6 +69,13 @@ public class UserMealService {
     public UserMealDto update(Integer id, CreateUserMealRequest newUserMeal) {
         UserMeal userMeal = repository.findById(id).orElseThrow(() -> new NotFoundException("Запись по id " + id + " не найдена"));
         Product product = productService.findProduct1(newUserMeal.getProductId());
+        if (product == null) {
+            throw new NotFoundException("Продукт с id " + newUserMeal.getProductId() + " не найден");
+        }
+
+        if (newUserMeal.getAmountGrams() <= 0) {
+            throw new ValidationException("Количество граммов должно быть положительным числом");
+        }
 
         userMeal.setProduct(product);
 
