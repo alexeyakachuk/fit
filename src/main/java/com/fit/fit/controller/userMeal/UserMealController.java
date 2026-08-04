@@ -42,4 +42,10 @@ public class UserMealController {
     public void deleteUser(@PathVariable Integer id) {
         service.delete(id);
     }
+
+    //обновление
+    @PutMapping("/{id}")
+    public UserMealDto updateUserMeal(@PathVariable Integer id, @RequestBody CreateUserMealRequest newUserMeal) {
+        return service.update(id, newUserMeal);
+    }
 }

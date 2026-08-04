@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class UserMealDto {
     //возможно исправить на UserDto и ProductDto
+    private Integer id;
     private User user;
     private Product product;
     private Integer amountGrams;
@@ -17,11 +18,20 @@ public class UserMealDto {
     private LocalDate mealDate;
 
     public UserMealDto(UserMeal userMeal) {
+        this.id = userMeal.getId();
         this.user = userMeal.getUser();
         this.product = userMeal.getProduct();
         this.amountGrams = userMeal.getAmountGrams();
         this.mealType = userMeal.getMealType();
         this.mealDate = userMeal.getMealDate();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -68,18 +78,19 @@ public class UserMealDto {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         UserMealDto that = (UserMealDto) o;
-        return Objects.equals(getUser(), that.getUser()) && Objects.equals(getProduct(), that.getProduct()) && Objects.equals(getAmountGrams(), that.getAmountGrams()) && Objects.equals(getMealType(), that.getMealType()) && Objects.equals(getMealDate(), that.getMealDate());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getProduct(), that.getProduct()) && Objects.equals(getAmountGrams(), that.getAmountGrams()) && Objects.equals(getMealType(), that.getMealType()) && Objects.equals(getMealDate(), that.getMealDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getProduct(), getAmountGrams(), getMealType(), getMealDate());
+        return Objects.hash(getId(), getUser(), getProduct(), getAmountGrams(), getMealType(), getMealDate());
     }
 
     @Override
     public String toString() {
         return "UserMealDto{" +
-                "user=" + user +
+                "id=" + id +
+                ", user=" + user +
                 ", product=" + product +
                 ", amountGrams=" + amountGrams +
                 ", mealType='" + mealType + '\'' +

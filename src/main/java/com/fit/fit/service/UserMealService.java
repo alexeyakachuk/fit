@@ -2,6 +2,7 @@ package com.fit.fit.service;
 
 import com.fit.fit.controller.userMeal.CreateUserMealRequest;
 import com.fit.fit.dto.UserMealDto;
+import com.fit.fit.exception.NotFoundException;
 import com.fit.fit.model.Product;
 import com.fit.fit.model.User;
 import com.fit.fit.model.UserMeal;
@@ -51,5 +52,23 @@ public class UserMealService {
     //Удоление
     public void delete (Integer id) {
         repository.deleteById(id);
+    }
+
+    //обновление
+    public UserMealDto update(Integer id, CreateUserMealRequest newUserMeal) {
+        UserMeal userMeal = repository.findById(id).orElseThrow(() -> new NotFoundException("Запись по id " + id + " не найдена"));
+        Product product = productService.findProduct1(newUserMeal.getProductId());
+
+        userMeal.setProduct(product);
+
+        userMeal.setAmountGrams(newUserMeal.getAmountGrams());
+        userMeal.setMealType(newUserMeal.getMealType());
+        if (newUserMeal.getMealDate() == null) {
+            userMeal.setMealDate(LocalDate.now());
+        } else {
+            userMeal.setMealDate(newUserMeal.getMealDate());
+        }
+
+        return new UserMealDto(userMeal);
     }
 }
