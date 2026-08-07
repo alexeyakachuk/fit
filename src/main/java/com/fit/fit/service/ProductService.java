@@ -52,7 +52,7 @@ public class ProductService {
     //Удоление продукта по id
     public void deleteProduct(Integer id) {
         if (!repository.existsById(id)) {
-            throw new NotFoundException("Продукта  с id " + id + " не найден");
+            throw new NotFoundException("Продукт с id " + id + " не найден");
         }
         repository.deleteById(id);
     }

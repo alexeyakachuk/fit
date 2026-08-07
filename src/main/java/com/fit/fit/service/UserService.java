@@ -3,9 +3,11 @@ package com.fit.fit.service;
 import com.fit.fit.controller.user.CreateUserRequest;
 import com.fit.fit.dto.UserDto;
 import com.fit.fit.exception.NotFoundException;
+import com.fit.fit.exception.ValidationException;
 import com.fit.fit.model.User;
 import com.fit.fit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +20,28 @@ public class UserService {
 
     // создание пользователя
     public UserDto create(CreateUserRequest newUser) {
-        // если будет нужно сделать проверки на исключения имени и почты
+
+        // Проверка имени
+        if (newUser.getUserName() == null || newUser.getUserName().trim().isEmpty()) {
+            throw new ValidationException("Имя пользователя не может быть пустым");
+        }
+        // Проверка email
+        if (newUser.getEmail() == null || newUser.getEmail().trim().isEmpty()) {
+            throw new ValidationException("Email не может быть пустым");
+        }
+        // Проверка уникальности email
+        if (repository.findEmail(newUser.getEmail()) != null) {
+            throw new ValidationException("Такой email уже существует");
+        }
+
+        // Хешируем пароль (например, через BCryptPasswordEncoder)
+        String hashedPassword = new BCryptPasswordEncoder().encode(newUser.getPassword());
+
         User user = User.builder()
                 .userName(newUser.getUserName())
                 .email(newUser.getEmail())
                 // Потом обязательно за хешировать пароль
-                .password(newUser.getPassword())
+                .password(hashedPassword)
                 .build();
         User save = repository.save(user);
         // Возврощаем созданного пользователя для проверки
